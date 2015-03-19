@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:trusty
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
