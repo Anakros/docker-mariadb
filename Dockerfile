@@ -8,5 +8,10 @@ RUN apt-get update \
 # if ZFS implementation doesn't support AIO
 RUN echo 'innodb_use_native_aio = 0' >> /etc/mysql/my.cnf
 
-ADD start.sh /
-CMD [ "/start.sh" ]
+RUN if [ ! -d /var/lib/mysql/mysql ]; then \
+		mkdir -p -m 700 /var/lib/mysql; \
+		chown mysql:mysql /var/lib/mysql; \
+		mysql_install_db ;\
+    fi
+
+CMD ["mysqld_safe", "--bind-address=0.0.0.0", "--innodb_use_native_aio=0"]
